@@ -1,0 +1,16 @@
+{
+  "name": "com.raven12345.servicecontainer",
+  "version": "1.0.0",
+  "displayName": "Service Container",
+  "description": "A lightweight service container for Unity.",
+  "unity": "2020.3",
+  "license": "MIT",
+  "keywords": [
+    "service-container",
+    "dependency-injection",
+    "architecture"
+  ],
+  "author": {
+    "name": "Raven12345"
+  }
+}

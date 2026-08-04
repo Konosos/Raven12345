@@ -1,0 +1,18 @@
+{
+    "name": "com.raven12345.servicecontainer.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d5aa475c7be745d47a4da2884dab39da"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
