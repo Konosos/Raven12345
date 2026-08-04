@@ -7,10 +7,23 @@ namespace Raven12345.Servicer
     public sealed class SceneInstaller : MonoBehaviour
     {
         [SerializeField] private ServiceRegistration[] registrations;
+        [SerializeField] private ServiceSettingSO[] settings;
 
         private void Awake()
         {
             ServiceContainer container = ServiceContainer.Scene;
+
+            foreach (ServiceSettingSO setting in settings)
+            {
+                if (setting == null)
+                {
+                    Debug.LogError("SceneInstaller contains an empty service setting.", this);
+                    continue;
+                }
+
+                setting.Register(container);
+            }
+
             foreach (ServiceRegistration registration in registrations)
             {
                 Register(container, registration);

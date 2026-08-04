@@ -19,7 +19,7 @@ namespace Raven12345.Servicer
                     DontDestroyOnLoad(go);
                     globalContainer = go.AddComponent<ServiceContainer>();
 
-                    var globalSetting = Resources.Load<ServiceSettingSO>("ServiceGlobalSettingSO");
+                    ServiceGlobalSettingSO globalSetting = Resources.Load<ServiceGlobalSettingSO>("ServiceGlobalSettingSO");
 
                     if (globalSetting != null)
                         globalSetting.Register(globalContainer);

@@ -10,5 +10,9 @@ https://github.com/Konosos/Raven12345.git?path=Assets/Packages/ServiceContainer
 
 ## Setup
 
-1. Create a ScriptableObject class named `ServiceGlobalSettingSO` that inherits from `ServiceSettingSO`.
-2. Create an instance of `ServiceGlobalSettingSO` inside a `Resources` folder.
+1. Create ScriptableObject classes that inherit from `ServiceSettingSO` and implement `Register`.
+2. Create a **Service Global Setting** asset from **Assets > Create > Raven12345 > Service Container > Global Setting**.
+3. Place the asset in a `Resources` folder and name it `ServiceGlobalSettingSO`.
+4. Add the service-setting assets to its **Settings** list.
+
+The settings in this asset are registered automatically when `ServiceContainer.Global` is first accessed.
