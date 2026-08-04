@@ -1,7 +1,7 @@
 Installation
 Add the core package:
 
-git url: "https://github.com/nguyenchithanh113/All-purposeSystemStacks.git?path=Assets/AllPurposeSystemStacks/Packages/com.ass.core"
+git url: "https://github.com/Konosos/Raven12345.git?path=Assets/Packages/ServiceContainer"
 
 
 
