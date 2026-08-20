@@ -464,7 +464,38 @@ public sealed class SpineAssetStudioWindow : EditorWindow {
 			"Spine Asset Studio is installed, but spine-unity has not been detected. " +
 			"Import a compatible spine-unity runtime, then ensure the SPINE_UNITY scripting define is enabled.",
 			MessageType.Info);
-		if (GUILayout.Button("Open Player Settings")) SettingsService.OpenProjectSettings("Project/Player");
+		if (GUILayout.Button("Detect Spine and Enable SPINE_UNITY")) EnableSpineUnityDefine();
+	}
+
+	static void EnableSpineUnityDefine () {
+		bool spineDetected = AppDomain.CurrentDomain.GetAssemblies()
+			.Any(assembly => assembly.GetType("Spine.Unity.SkeletonDataAsset", false) != null);
+		if (!spineDetected) {
+			EditorUtility.DisplayDialog(
+				"spine-unity not found",
+				"Import a compatible spine-unity runtime first. SPINE_UNITY was not added because it would cause the full tool to compile without Spine.",
+				"OK");
+			return;
+		}
+
+		#if UNITY_2021_2_OR_NEWER
+		UnityEditor.Build.NamedBuildTarget target = UnityEditor.Build.NamedBuildTarget.FromBuildTargetGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+		string defines = PlayerSettings.GetScriptingDefineSymbols(target);
+		#else
+		BuildTargetGroup target = EditorUserBuildSettings.selectedBuildTargetGroup;
+		string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(target);
+		#endif
+
+		List<string> symbols = defines.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+		if (!symbols.Contains("SPINE_UNITY")) symbols.Add("SPINE_UNITY");
+
+		#if UNITY_2021_2_OR_NEWER
+		PlayerSettings.SetScriptingDefineSymbols(target, string.Join(";", symbols));
+		#else
+		PlayerSettings.SetScriptingDefineSymbolsForGroup(target, string.Join(";", symbols));
+		#endif
+
+		EditorUtility.DisplayDialog("SPINE_UNITY enabled", "The SPINE_UNITY define was added for the current build target. Unity will now reload scripts and enable Spine Asset Studio.", "OK");
 	}
 }
 #endif
