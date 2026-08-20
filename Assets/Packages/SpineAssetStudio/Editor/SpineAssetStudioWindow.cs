@@ -5,11 +5,14 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+#if SPINE_UNITY
 using Spine;
 using Spine.Unity;
+#endif
 using UnityEditor;
 using UnityEngine;
 
+#if SPINE_UNITY
 /// <summary>Edits event timelines in a Spine JSON export and previews it in an isolated editor preview scene.</summary>
 public class SpineAssetStudioWindow : EditorWindow {
 	SkeletonDataAsset skeletonDataAsset;
@@ -448,3 +451,20 @@ public class SpineAssetStudioWindow : EditorWindow {
 	static void AppendIndent (StringBuilder s, int depth) { s.Append('\n'); for (int i = 0; i < depth; i++) s.Append('\t'); }
 	static string Escape (string text) => text.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t");
 }
+#else
+/// <summary>Shown while the optional spine-unity dependency is unavailable.</summary>
+public sealed class SpineAssetStudioWindow : EditorWindow {
+	[MenuItem("Spine/Asset Studio")]
+	static void Open () => GetWindow<SpineAssetStudioWindow>("Spine Asset Studio");
+
+	void OnGUI () {
+		EditorGUILayout.Space(12);
+		EditorGUILayout.LabelField("SPINE ASSET STUDIO", EditorStyles.boldLabel);
+		EditorGUILayout.HelpBox(
+			"Spine Asset Studio is installed, but spine-unity has not been detected. " +
+			"Import a compatible spine-unity runtime, then ensure the SPINE_UNITY scripting define is enabled.",
+			MessageType.Info);
+		if (GUILayout.Button("Open Player Settings")) SettingsService.OpenProjectSettings("Project/Player");
+	}
+}
+#endif

@@ -6,7 +6,7 @@ Spine Asset Studio là Unity Editor Window dùng để xem trước và chỉnh 
 
 - Unity project đã cài spine-unity runtime tương thích với phiên bản file export(đã test trên spine 4.2).
 - Spine Asset Studio có thể được import trước Spine mà không làm project lỗi compile. Khi chưa có Spine, menu `Spine > Asset Studio` chỉ hiển thị hướng dẫn cài đặt.
-- Sau khi import spine-unity, bảo đảm scripting define `SPINE_UNITY` được bật (trong **Project Settings > Player > Scripting Define Symbols** nếu runtime của bạn chưa tự thêm define này). Unity sẽ reload và bật đầy đủ công cụ.
+- Sau khi import spine-unity, bảo đảm scripting define `SPINE_UNITY` được bật (trong **Project Settings > Player > Scripting Define Symbols** nếu runtime của bạn chưa tự thêm define này). Unity sẽ reload và bật đầy đủ công cụ. Package không dùng assembly reference cứng tới Spine, nên hoạt động với spine-unity import từ Asset Store hoặc package có tên assembly khác nhau.
 - `SkeletonDataAsset` phải tham chiếu tới file Spine JSON.
 - Chỉnh sửa trực tiếp không hỗ trợ file nhị phân `.skel.bytes`.
 - Nên quản lý project bằng Git hoặc hệ thống version control trước khi chỉnh dữ liệu gốc.
