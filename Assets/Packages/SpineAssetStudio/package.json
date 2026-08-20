@@ -1,0 +1,16 @@
+{
+  "name": "com.raven12345.spine-asset-studio",
+  "version": "1.0.0",
+  "displayName": "Spine Asset Studio",
+  "description": "Editor tools for managing Spine JSON event timelines, animations, skins, and previews.",
+  "unity": "2020.3",
+  "license": "MIT",
+  "keywords": [
+    "spine",
+    "animation",
+    "editor-tools"
+  ],
+  "author": {
+    "name": "Raven12345"
+  }
+}

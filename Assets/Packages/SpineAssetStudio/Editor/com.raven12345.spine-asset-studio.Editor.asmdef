@@ -1,0 +1,20 @@
+{
+  "name": "com.raven12345.spine-asset-studio.Editor",
+  "rootNamespace": "Raven12345.SpineAssetStudio",
+  "references": [
+    "Spine.Unity"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [
+    "SPINE_UNITY"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
