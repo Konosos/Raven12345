@@ -7,13 +7,13 @@ SpriteForge is a Unity Package Manager (UPM) editor package. It requires Unity 2
 In Unity, open **Window > Package Management > Package Manager**, select **+ > Add package from git URL**, then enter:
 
 ```text
-https://github.com/<owner>/<repository>.git?path=/Assets/Packages/SpriteForge
+https://github.com/Konosos/Raven12345.git?path=/Assets/Packages/SpriteForge
 ```
 
-Replace `<owner>/<repository>` with the Git repository that contains this folder. Pin a release tag when needed:
+Pin a release tag when needed:
 
 ```text
-https://github.com/<owner>/<repository>.git?path=/Assets/Packages/SpriteForge#v1.0.0
+https://github.com/Konosos/Raven12345.git?path=/Assets/Packages/SpriteForge#v1.0.0
 ```
 
 For local development, clone the repository outside the consuming project's `Assets` folder, then use **+ > Add package from disk** and select its `package.json`.
