@@ -15,6 +15,7 @@ using UnityEngine;
 #if SPINE_UNITY
 /// <summary>Edits event timelines in a Spine JSON export and previews it in an isolated editor preview scene.</summary>
 public class SpineAssetStudioWindow : EditorWindow {
+	const int PreviewLayer = 31;
 	SkeletonDataAsset skeletonDataAsset;
 	readonly List<SkeletonDataAsset> projectSelection = new List<SkeletonDataAsset>();
 	int projectSelectionIndex;
@@ -366,6 +367,7 @@ public class SpineAssetStudioWindow : EditorWindow {
 	void RebuildPreview () {
 		DisposePreview(); if (skeletonDataAsset == null || !IsJsonSource) return;
 		preview = new PreviewRenderUtility(); preview.camera.orthographic = true; preview.camera.clearFlags = CameraClearFlags.SolidColor; preview.camera.nearClipPlane = .01f; preview.camera.farClipPlane = 1000f; preview.camera.transform.position = new Vector3(0, 0, -10); preview.camera.transform.rotation = Quaternion.identity;
+		preview.camera.cullingMask = unchecked(1 << PreviewLayer);
 		try {
 			previewObject = new GameObject("Spine Event Preview");
 			SkeletonAnimation animation = previewObject.AddComponent<SkeletonAnimation>();
@@ -374,6 +376,7 @@ public class SpineAssetStudioWindow : EditorWindow {
 			// The original asset inspector remains responsible for reporting setup issues.
 			animation.Initialize(true, true);
 			preview.AddSingleGO(previewObject);
+			SetPreviewLayer(previewObject);
 			ApplyPreviewPose();
 			FramePreviewCamera();
 			previewObject.hideFlags = HideFlags.HideAndDontSave;
@@ -401,7 +404,12 @@ public class SpineAssetStudioWindow : EditorWindow {
 		clip.Apply(skeleton, -1f, previewTime, false, null, 1f, MixBlend.Replace, MixDirection.In);
 		skeleton.UpdateWorldTransform(Skeleton.Physics.Pose);
 		animation.LateUpdateMesh();
+		SetPreviewLayer(previewObject);
 		FramePreviewCamera();
+	}
+	static void SetPreviewLayer (GameObject root) {
+		if (root == null) return;
+		foreach (Transform child in root.GetComponentsInChildren<Transform>(true)) child.gameObject.layer = PreviewLayer;
 	}
 	void FramePreviewCamera () {
 		if (previewObject == null || preview == null) return;
@@ -427,9 +435,9 @@ public class SpineAssetStudioWindow : EditorWindow {
 		StringBuilder report = new StringBuilder("[Spine Asset Studio Preview Diagnostics]\n");
 		report.AppendLine(previewDiagnostics);
 		report.AppendLine("Preview scene valid: " + (preview != null));
-		if (preview != null) report.AppendLine($"Camera: position={preview.camera.transform.position}, rotation={preview.camera.transform.rotation.eulerAngles}, orthoSize={preview.camera.orthographicSize}, near={preview.camera.nearClipPlane}, far={preview.camera.farClipPlane}");
+		if (preview != null) report.AppendLine($"Camera: position={preview.camera.transform.position}, rotation={preview.camera.transform.rotation.eulerAngles}, orthoSize={preview.camera.orthographicSize}, near={preview.camera.nearClipPlane}, far={preview.camera.farClipPlane}, cullingMask=0x{preview.camera.cullingMask:X8}");
 		if (previewObject != null) {
-			report.AppendLine("Preview object scene: " + previewObject.scene.name + " (loaded=" + previewObject.scene.isLoaded + ")");
+			report.AppendLine("Preview object scene: " + previewObject.scene.name + " (loaded=" + previewObject.scene.isLoaded + "), layer=" + previewObject.layer);
 			foreach (MeshFilter filter in previewObject.GetComponentsInChildren<MeshFilter>()) {
 				MeshRenderer renderer = filter.GetComponent<MeshRenderer>(); Mesh mesh = filter.sharedMesh;
 				report.AppendLine($"MeshFilter '{filter.name}': mesh={(mesh == null ? "null" : mesh.name)}, vertices={(mesh == null ? 0 : mesh.vertexCount)}, submeshes={(mesh == null ? 0 : mesh.subMeshCount)}, bounds={(mesh == null ? "n/a" : mesh.bounds.ToString())}, materials={(renderer == null || renderer.sharedMaterials == null ? 0 : renderer.sharedMaterials.Length)}");
