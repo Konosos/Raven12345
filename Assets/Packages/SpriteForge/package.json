@@ -1,0 +1,21 @@
+{
+  "name": "com.raven12345.spriteforge",
+  "version": "1.0.0",
+  "displayName": "SpriteForge",
+  "description": "Editor workflows for preparing, validating, and maintaining 2D sprite assets at scale.",
+  "unity": "2022.3",
+  "license": "MIT",
+  "dependencies": {
+    "com.unity.2d.sprite": "1.0.0"
+  },
+  "keywords": [
+    "sprite",
+    "2d",
+    "texture",
+    "atlas",
+    "editor-tools"
+  ],
+  "author": {
+    "name": "Raven12345"
+  }
+}

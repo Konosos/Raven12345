@@ -1,0 +1,5 @@
+# Local snapshots are generated per Unity project and must not be published.
+Backups~/
+
+# Unity-generated editor metadata for package documentation.
+*.meta
