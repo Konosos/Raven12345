@@ -1,0 +1,10 @@
+{
+  "name": "com.raven12345.audioforge",
+  "version": "1.0.0",
+  "displayName": "AudioForge",
+  "description": "Non-destructive batch audio trimming, gain, normalization, and fades for Unity AudioClips.",
+  "unity": "2022.3",
+  "license": "MIT",
+  "keywords": ["audio", "audioclip", "waveform", "editor-tools", "batch-processing"],
+  "author": { "name": "Raven12345" }
+}
