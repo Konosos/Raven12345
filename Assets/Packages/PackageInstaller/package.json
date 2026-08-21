@@ -1,0 +1,12 @@
+{
+  "name": "com.raven12345.package-installer",
+  "version": "1.0.0",
+  "displayName": "Raven Package Installer",
+  "description": "An editor window for installing a custom catalogue of Git-based Unity packages.",
+  "unity": "2020.3",
+  "license": "MIT",
+  "keywords": ["package", "git", "installer", "editor-tools"],
+  "author": {
+    "name": "Raven12345"
+  }
+}

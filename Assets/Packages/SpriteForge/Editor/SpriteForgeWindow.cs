@@ -60,7 +60,7 @@ namespace SpriteForge
             "Overview", "Optimize", "Preview / Dry Run", "Backup & Undo", "Atlas", "Animation", "Sheet Slicer", "Palette", "Importer", "Analyzer", "Duplicates", "References", "Unused Assets", "Rename"
         };
 
-        [MenuItem("Tools/SpriteForge/Open Workspace %#m")]
+        [MenuItem("Tools/Raven/SpriteForge")]
         public static void Open()
         {
             var window = GetWindow<SpriteForgeWindow>();

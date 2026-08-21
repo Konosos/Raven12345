@@ -41,7 +41,7 @@ public class SpineAssetStudioWindow : EditorWindow {
 	readonly Stack<string> undoSnapshots = new Stack<string>();
 	readonly Stack<string> redoSnapshots = new Stack<string>();
 
-	[MenuItem("Spine/Asset Studio")]
+	[MenuItem("Tools/Raven/Spine Asset Studio")]
 	static void Open () => GetWindow<SpineAssetStudioWindow>("Spine Asset Studio");
 	[MenuItem("Assets/Open in Spine Asset Studio", false, 2000)]
 	static void OpenProjectSelection () { SpineAssetStudioWindow window = GetWindow<SpineAssetStudioWindow>("Spine Asset Studio"); window.LoadProjectSelection(); window.Focus(); }
@@ -462,7 +462,7 @@ public class SpineAssetStudioWindow : EditorWindow {
 #else
 /// <summary>Shown while the optional spine-unity dependency is unavailable.</summary>
 public sealed class SpineAssetStudioWindow : EditorWindow {
-	[MenuItem("Spine/Asset Studio")]
+	[MenuItem("Tools/Raven/Spine Asset Studio")]
 	static void Open () => GetWindow<SpineAssetStudioWindow>("Spine Asset Studio");
 
 	void OnGUI () {
