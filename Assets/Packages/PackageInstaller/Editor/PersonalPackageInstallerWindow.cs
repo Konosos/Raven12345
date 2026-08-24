@@ -162,34 +162,55 @@ namespace Raven.PackageInstaller
                 if (listRequest.Status == StatusCode.Success)
                 {
                     installedPackageIds.Clear();
-                    foreach (var package in listRequest.Result) installedPackageIds.Add(package.name);
+                    if (listRequest.Result != null)
+                    {
+                        foreach (var package in listRequest.Result)
+                        {
+                            if (package != null && !string.IsNullOrEmpty(package.name)) installedPackageIds.Add(package.name);
+                        }
+                    }
                     message = "Package list updated.";
                 }
-                else message = "Could not read installed packages: " + listRequest.Error.message;
+                else message = "Could not read installed packages: " + GetRequestError(listRequest.Error);
                 listRequest = null;
             }
 
             if (addRequest != null && addRequest.IsCompleted)
             {
-                if (addRequest.Status == StatusCode.Success)
+                // A package installation may cause an assembly/domain reload. In that case,
+                // Unity can retain the native request while the window's managed fields are reset.
+                // Do not assume the request result, error, or original catalogue entry still exists.
+                var completedRequest = addRequest;
+                var package = installingPackage;
+                addRequest = null;
+                installingPackage = null;
+                var packageName = package != null && !string.IsNullOrEmpty(package.displayName) ? package.displayName : "package";
+
+                if (completedRequest.Status == StatusCode.Success)
                 {
-                    installingPackage.packageId = addRequest.Result.name;
-                    installedPackageIds.Add(installingPackage.packageId);
-                    SaveCatalog();
-                    message = "Installed " + installingPackage.displayName + ".";
+                    if (package != null && completedRequest.Result != null)
+                    {
+                        package.packageId = completedRequest.Result.name;
+                        if (!string.IsNullOrEmpty(package.packageId)) installedPackageIds.Add(package.packageId);
+                        SaveCatalog();
+                    }
+                    message = "Installed " + packageName + ".";
                 }
                 else
                 {
-                    message = "Could not install " + installingPackage.displayName + ": " + addRequest.Error.message;
+                    message = "Could not install " + packageName + ": " + GetRequestError(completedRequest.Error);
                     installQueue.Clear();
                 }
-                addRequest = null;
-                installingPackage = null;
                 InstallNext();
             }
 
             Repaint();
             if (listRequest == null && addRequest == null) EditorApplication.update -= PollRequests;
+        }
+
+        private static string GetRequestError(Error error)
+        {
+            return error != null && !string.IsNullOrEmpty(error.message) ? error.message : "Unity Package Manager did not provide an error message.";
         }
 
         private void OnDisable() => EditorApplication.update -= PollRequests;
