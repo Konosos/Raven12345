@@ -12,6 +12,8 @@ using Spine.Unity;
 using UnityEditor;
 using UnityEngine;
 
+namespace Raven12345 {
+
 #if SPINE_UNITY
 /// <summary>Edits event timelines in a Spine JSON export and previews it in an isolated editor preview scene.</summary>
 public class SpineAssetStudioWindow : EditorWindow {
@@ -507,3 +509,4 @@ public sealed class SpineAssetStudioWindow : EditorWindow {
 	}
 }
 #endif
+}

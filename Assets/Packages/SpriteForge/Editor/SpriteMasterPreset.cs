@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SpriteForge
+namespace Raven12345
 {
     /// <summary>Reusable SpriteForge workflow configuration.</summary>
     public sealed class SpriteMasterPreset : ScriptableObject

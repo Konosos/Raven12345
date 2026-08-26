@@ -17,6 +17,10 @@ MonoBehaviour:
     packageId: com.raven12345.spriteforge
     gitUrl: https://github.com/Konosos/Raven12345.git?path=Assets/Packages/SpriteForge
     description: 2D sprite production workflows.
+  - displayName: RavenToolkit
+    packageId: com.raven12345.raventoolkit
+    gitUrl: https://github.com/Konosos/Raven12345.git?path=Assets/Packages/RavenToolkit
+    description: Editor windows for Android builds, scripting symbols, scenes, and scripts.
   - displayName: Service Container
     packageId: com.raven12345.servicecontainer
     gitUrl: https://github.com/Konosos/Raven12345.git?path=Assets/Packages/ServiceContainer

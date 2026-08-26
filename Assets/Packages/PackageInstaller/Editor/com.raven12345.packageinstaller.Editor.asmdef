@@ -1,6 +1,6 @@
 {
   "name": "com.raven12345.packageinstaller.Editor",
-  "rootNamespace": "Raven.PackageInstaller",
+  "rootNamespace": "Raven12345",
   "references": [],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],

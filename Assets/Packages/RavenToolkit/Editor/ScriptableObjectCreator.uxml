@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="ScriptableObjectCreator.uss" />
+    <Style src="RootStyles.uss" />
+    <ui:VisualElement name="RootPanel" class="panel" style="flex-grow: 1;">
+        <ui:VisualElement name="title-container" class="align-horizontal" style="flex-direction: row;">
+            <ui:Label text="▸" name="caret" class="rotate-90" style="font-size: 18px;" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="title" class="header" style="-unity-font-style: bold;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="new-panel" class="expanded">
+            <ui:Label text="No Scriptable Object Exists!" display-tooltip-when-elided="true" name="missing-so-label" class="mb-8" />
+            <ui:Label text="Create a new one with name" display-tooltip-when-elided="true" />
+            <ui:VisualElement class="align-horizontal" style="flex-direction: row;">
+                <ui:TextField picking-mode="Ignore" value="filler text" name="name-input" class="flex-grow" style="flex-grow: 1;" />
+                <ui:Button text="Create" display-tooltip-when-elided="true" name="create" />
+            </ui:VisualElement>
+            <ui:Label text="Select Existing" display-tooltip-when-elided="true" class="pt-4 mt-4 thin-border-top" />
+            <uie:ObjectField label="Scriptable Object" name="scriptable-object" />
+        </ui:VisualElement>
+        <ui:VisualElement name="content-panel" class="expanded">
+            <uie:ObjectField label="Scriptable Object" name="scriptable-object-existing" />
+            <ui:Button text="Delete" display-tooltip-when-elided="true" name="delete" class="align-right danger mb-8" style="align-self: flex-end; background-color: rgb(172, 0, 0); color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

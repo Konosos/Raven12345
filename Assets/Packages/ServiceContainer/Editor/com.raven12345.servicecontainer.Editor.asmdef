@@ -1,6 +1,6 @@
 {
     "name": "com.raven12345.servicecontainer.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "Raven12345",
     "references": [
         "GUID:d5aa475c7be745d47a4da2884dab39da"
     ],

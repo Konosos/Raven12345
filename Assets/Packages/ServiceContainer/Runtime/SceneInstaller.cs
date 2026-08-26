@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Raven12345.Servicer
+namespace Raven12345
 {
     [DefaultExecutionOrder(-1000)]
     public sealed class SceneInstaller : MonoBehaviour

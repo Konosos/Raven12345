@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="AndroidBuildStyles.uss" />
+    <ui:IntegerField label="Bundle Code" value="1" name="BundleCode" class="field" />
+    <ui:TextField picking-mode="Ignore" label="Version" value="0.0.1" name="Version" class="field" />
+    <ui:VisualElement name="Holder" style="flex-grow: 0; flex-direction: row; align-items: center; justify-content: center; align-self: center; width: 100%; height: auto; margin-top: 5px; margin-bottom: 5px;">
+        <ui:Toggle label="AAB" name="BuildAppBundle" class="toggle" style="flex-shrink: 1;" />
+        <ui:Toggle label="Dev Build" name="DevelopmentBuild" class="toggle" style="flex-shrink: 1; flex-grow: 0.5;" />
+    </ui:VisualElement>
+    <ui:EnumField label="Symbols" type="Unity.Android.Types.DebugSymbolLevel, Unity.Android.Types" name="SymbolsFile" class="field" style="flex-direction: row; flex-grow: 0; align-self: auto; justify-content: center;" />
+    <ui:Button text="Build" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BuildButton" class="button" />
+</ui:UXML>

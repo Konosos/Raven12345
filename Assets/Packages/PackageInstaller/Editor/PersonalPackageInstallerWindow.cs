@@ -5,7 +5,7 @@ using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
-namespace Raven.PackageInstaller
+namespace Raven12345
 {
     public sealed class PersonalPackageInstallerWindow : EditorWindow
     {

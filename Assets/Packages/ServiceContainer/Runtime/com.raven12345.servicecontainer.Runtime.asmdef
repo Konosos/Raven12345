@@ -1,6 +1,6 @@
 {
     "name": "com.raven12345.servicecontainer.Runtime",
-    "rootNamespace": "",
+    "rootNamespace": "Raven12345",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

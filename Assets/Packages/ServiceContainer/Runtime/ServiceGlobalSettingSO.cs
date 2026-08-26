@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Raven12345.Servicer
+namespace Raven12345
 {
     [CreateAssetMenu(fileName = "ServiceGlobalSettingSO", menuName = "Raven12345/Service Container/Global Setting")]
     public sealed class ServiceGlobalSettingSO : ScriptableObject

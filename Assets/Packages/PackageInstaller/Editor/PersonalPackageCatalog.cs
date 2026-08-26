@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Raven.PackageInstaller
+namespace Raven12345
 {
     [Serializable]
     public sealed class PersonalPackageDefinition
@@ -34,6 +34,7 @@ namespace Raven.PackageInstaller
             const string repository = "https://github.com/Konosos/Raven12345.git?path=Assets/Packages/";
             yield return new PersonalPackageDefinition { displayName = "SpriteForge", packageId = "com.raven12345.spriteforge", gitUrl = repository + "SpriteForge", description = "2D sprite production workflows." };
             yield return new PersonalPackageDefinition { displayName = "AudioForge", packageId = "com.raven12345.audioforge", gitUrl = repository + "AudioForge", description = "Non-destructive batch audio trim, gain, normalization, and fades." };
+            yield return new PersonalPackageDefinition { displayName = "RavenToolkit", packageId = "com.raven12345.raventoolkit", gitUrl = repository + "RavenToolkit", description = "Editor windows for Android builds, scripting symbols, scenes, and scripts." };
             yield return new PersonalPackageDefinition { displayName = "Service Container", packageId = "com.raven12345.servicecontainer", gitUrl = repository + "ServiceContainer", description = "Lightweight dependency-injection container." };
             yield return new PersonalPackageDefinition { displayName = "Spine Asset Studio", packageId = "com.raven12345.spine-asset-studio", gitUrl = repository + "SpineAssetStudio", description = "Tools for Spine assets and event timelines." };
             yield return new PersonalPackageDefinition { displayName = "UniTask", packageId = "com.cysharp.unitask", gitUrl = "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask", description = "High-performance async/await integration for Unity." };

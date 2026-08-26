@@ -9,7 +9,7 @@ using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace SpriteForge
+namespace Raven12345
 {
     /// <summary>A single workspace for SpriteForge batch operations.</summary>
     public sealed class SpriteForgeWindow : EditorWindow

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace AudioForge
+namespace Raven12345
 {
     /// <summary>Non-destructive batch audio processing that exports processed WAV files alongside Unity assets.</summary>
     public sealed class AudioForgeWindow : EditorWindow

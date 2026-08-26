@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Raven12345.Servicer
+namespace Raven12345
 {
     public class Factory
     {

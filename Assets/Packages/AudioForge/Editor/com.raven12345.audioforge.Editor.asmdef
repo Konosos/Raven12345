@@ -1,6 +1,6 @@
 {
   "name": "com.raven12345.audioforge.Editor",
-  "rootNamespace": "AudioForge",
+  "rootNamespace": "Raven12345",
   "references": [],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],

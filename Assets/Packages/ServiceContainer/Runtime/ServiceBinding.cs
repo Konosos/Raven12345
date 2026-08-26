@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Raven12345.Servicer
+namespace Raven12345
 {
     [DefaultExecutionOrder(-1000)]
     public class ServiceBinding : MonoBehaviour

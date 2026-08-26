@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Raven12345.Servicer
+namespace Raven12345
 {
     [DefaultExecutionOrder(-900)]
     public abstract class SceneContext : MonoBehaviour

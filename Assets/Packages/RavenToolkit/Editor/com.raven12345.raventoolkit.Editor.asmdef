@@ -1,9 +1,7 @@
 {
-  "name": "com.raven12345.spriteforge.Editor",
+  "name": "com.raven12345.raventoolkit.Editor",
   "rootNamespace": "Raven12345",
-  "references": [
-    "Unity.2D.Sprite.Editor"
-  ],
+  "references": [],
   "includePlatforms": [
     "Editor"
   ],

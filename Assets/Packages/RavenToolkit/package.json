@@ -1,0 +1,18 @@
+{
+  "name": "com.raven12345.raventoolkit",
+  "version": "1.0.0",
+  "displayName": "RavenToolkit",
+  "description": "A collection of reusable Unity Editor windows for builds, scripting symbols, scene utilities, and script editing.",
+  "unity": "6000.0",
+  "license": "MIT",
+  "keywords": [
+    "editor",
+    "tools",
+    "android",
+    "build",
+    "utilities"
+  ],
+  "author": {
+    "name": "Raven12345"
+  }
+}
