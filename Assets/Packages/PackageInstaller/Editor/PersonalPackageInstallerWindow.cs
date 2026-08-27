@@ -18,13 +18,16 @@ namespace Raven12345
         private PersonalPackageDefinition installingPackage;
         private Vector2 scroll;
         private string message;
+        private string searchText = string.Empty;
+        private bool showInstalledOnly;
+        private bool editCatalog;
 
         [MenuItem("Tools/Raven/Package Installer")]
         public static void Open()
         {
             var window = GetWindow<PersonalPackageInstallerWindow>();
             window.titleContent = new GUIContent("Package Installer");
-            window.minSize = new Vector2(620, 400);
+            window.minSize = new Vector2(660, 440);
             window.Show();
         }
 
@@ -36,8 +39,10 @@ namespace Raven12345
 
         private void OnGUI()
         {
-            DrawToolbar();
-            if (!string.IsNullOrEmpty(message)) EditorGUILayout.HelpBox(message, addRequest != null ? MessageType.Info : MessageType.None);
+            DrawHeader();
+            DrawFilters();
+            if (!string.IsNullOrEmpty(message))
+                EditorGUILayout.HelpBox(message, addRequest != null || listRequest != null ? MessageType.Info : MessageType.None);
 
             scroll = EditorGUILayout.BeginScrollView(scroll);
             if (catalog == null)
@@ -46,8 +51,16 @@ namespace Raven12345
             }
             else
             {
-                for (var i = 0; i < catalog.packages.Count; i++) DrawPackage(catalog.packages[i], i);
-                if (GUILayout.Button("+ Add personal package"))
+                var visiblePackages = catalog.packages
+                    .Select((package, index) => new { package, index })
+                    .Where(item => IsVisible(item.package))
+                    .ToList();
+
+                if (visiblePackages.Count == 0)
+                    EditorGUILayout.HelpBox("No packages match the current filter.", MessageType.Info);
+
+                foreach (var item in visiblePackages) DrawPackage(item.package, item.index);
+                if (editCatalog && GUILayout.Button("+  Add personal package", GUILayout.Height(28)))
                 {
                     catalog.packages.Add(new PersonalPackageDefinition { displayName = "New Package" });
                     SaveCatalog();
@@ -56,16 +69,49 @@ namespace Raven12345
             EditorGUILayout.EndScrollView();
         }
 
-        private void DrawToolbar()
+        private void DrawHeader()
         {
-            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+            var headerRect = GUILayoutUtility.GetRect(1, 82, GUILayout.ExpandWidth(true));
+            EditorGUI.DrawRect(headerRect, new Color(0.10f, 0.14f, 0.21f));
+
+            var titleStyle = new GUIStyle(EditorStyles.boldLabel) { fontSize = 18, normal = { textColor = new Color(0.38f, 0.78f, 1f) } };
+            var subtitleStyle = new GUIStyle(EditorStyles.miniLabel) { normal = { textColor = new Color(0.72f, 0.78f, 0.85f) } };
+            GUI.Label(new Rect(headerRect.x + 16, headerRect.y + 13, 350, 24), "PACKAGE INSTALLER", titleStyle);
+            GUI.Label(new Rect(headerRect.x + 16, headerRect.y + 41, 420, 18), "Your personal Git package catalogue", subtitleStyle);
+
+            var count = catalog == null ? 0 : catalog.packages.Count;
+            var installed = catalog == null ? 0 : catalog.packages.Count(package => installedPackageIds.Contains(package.packageId));
+            GUI.Label(new Rect(headerRect.xMax - 225, headerRect.y + 17, 94, 18), $"{count} packages", subtitleStyle);
+            GUI.Label(new Rect(headerRect.xMax - 225, headerRect.y + 41, 100, 18), $"{installed} installed", subtitleStyle);
+
+            using (new EditorGUI.DisabledScope(listRequest != null || addRequest != null))
             {
-                GUILayout.Label("PERSONAL GIT PACKAGES", EditorStyles.boldLabel);
-                GUILayout.FlexibleSpace();
-                using (new EditorGUI.DisabledScope(listRequest != null || addRequest != null))
-                    if (GUILayout.Button("Refresh", EditorStyles.toolbarButton, GUILayout.Width(65))) RefreshInstalledPackages();
-                if (GUILayout.Button("Select Catalog", EditorStyles.toolbarButton, GUILayout.Width(85))) Selection.activeObject = catalog;
+                if (GUI.Button(new Rect(headerRect.xMax - 116, headerRect.y + 23, 100, 34), "Refresh")) RefreshInstalledPackages();
             }
+        }
+
+        private void DrawFilters()
+        {
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar, GUILayout.Height(28)))
+            {
+                GUILayout.Label("Search", EditorStyles.miniLabel, GUILayout.Width(42));
+                searchText = GUILayout.TextField(searchText, EditorStyles.toolbarSearchField, GUILayout.MinWidth(160));
+                if (!string.IsNullOrEmpty(searchText) && GUILayout.Button("×", EditorStyles.toolbarButton, GUILayout.Width(22))) searchText = string.Empty;
+                GUILayout.Space(8);
+                showInstalledOnly = GUILayout.Toggle(showInstalledOnly, "Installed only", EditorStyles.toolbarButton, GUILayout.Width(94));
+                GUILayout.FlexibleSpace();
+                editCatalog = GUILayout.Toggle(editCatalog, "Edit catalogue", EditorStyles.toolbarButton, GUILayout.Width(95));
+                if (GUILayout.Button("Select Asset", EditorStyles.toolbarButton, GUILayout.Width(80))) Selection.activeObject = catalog;
+            }
+        }
+
+        private bool IsVisible(PersonalPackageDefinition package)
+        {
+            if (showInstalledOnly && !installedPackageIds.Contains(package.packageId)) return false;
+            if (string.IsNullOrWhiteSpace(searchText)) return true;
+            var query = searchText.Trim();
+            return (package.displayName ?? string.Empty).IndexOf(query, System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                   (package.description ?? string.Empty).IndexOf(query, System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private void DrawPackage(PersonalPackageDefinition package, int index)
@@ -75,21 +121,38 @@ namespace Raven12345
             {
                 using (new EditorGUILayout.HorizontalScope())
                 {
-                    package.displayName = EditorGUILayout.TextField(package.displayName, EditorStyles.boldLabel);
+                    var nameStyle = new GUIStyle(EditorStyles.boldLabel) { fontSize = 14 };
+                    if (editCatalog)
+                    {
+                        EditorGUI.BeginChangeCheck();
+                        package.displayName = EditorGUILayout.TextField(package.displayName, nameStyle);
+                        if (EditorGUI.EndChangeCheck()) SaveCatalog();
+                    }
+                    else EditorGUILayout.LabelField(package.displayName, nameStyle);
                     GUILayout.FlexibleSpace();
-                    if (installed) GUILayout.Label("Installed", EditorStyles.miniButton, GUILayout.Width(70));
+                    if (ReferenceEquals(package, installingPackage)) GUILayout.Label("Installing…", EditorStyles.miniButton, GUILayout.Width(76));
+                    else if (installed) GUILayout.Label("✓ Installed", EditorStyles.miniButton, GUILayout.Width(76));
                     else using (new EditorGUI.DisabledScope(addRequest != null || string.IsNullOrWhiteSpace(package.gitUrl)))
-                        if (GUILayout.Button("Install", GUILayout.Width(70))) QueueInstall(package);
-                    if (GUILayout.Button("Remove", EditorStyles.miniButton, GUILayout.Width(58)))
+                        if (GUILayout.Button("Install", GUILayout.Width(76), GUILayout.Height(22))) QueueInstall(package);
+                    if (editCatalog && GUILayout.Button("Remove", EditorStyles.miniButton, GUILayout.Width(58)))
                     {
                         catalog.packages.RemoveAt(index);
                         SaveCatalog();
                         GUIUtility.ExitGUI();
                     }
                 }
-                package.gitUrl = EditorGUILayout.TextField("Git URL", package.gitUrl);
-                package.description = EditorGUILayout.TextField("Description", package.description);
-                if (GUI.changed) SaveCatalog();
+                if (editCatalog)
+                {
+                    EditorGUI.BeginChangeCheck();
+                    package.description = EditorGUILayout.TextField("Description", package.description);
+                    package.gitUrl = EditorGUILayout.TextField("Git URL", package.gitUrl);
+                    if (EditorGUI.EndChangeCheck()) SaveCatalog();
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(package.description, EditorStyles.wordWrappedMiniLabel);
+                    EditorGUILayout.LabelField(package.gitUrl, EditorStyles.miniLabel);
+                }
             }
         }
 

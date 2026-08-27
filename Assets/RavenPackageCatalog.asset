@@ -20,7 +20,8 @@ MonoBehaviour:
   - displayName: RavenToolkit
     packageId: com.raven12345.raventoolkit
     gitUrl: https://github.com/Konosos/Raven12345.git?path=Assets/Packages/RavenToolkit
-    description: Editor windows for Android builds, scripting symbols, scenes, and scripts.
+    description: Editor windows for Android builds, scripting symbols, scenes, and
+      scripts.
   - displayName: Service Container
     packageId: com.raven12345.servicecontainer
     gitUrl: https://github.com/Konosos/Raven12345.git?path=Assets/Packages/ServiceContainer
@@ -45,3 +46,12 @@ MonoBehaviour:
     packageId: jp.hadashikick.vcontainer
     gitUrl: https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer
     description: Fast dependency-injection container for Unity.
+  - displayName: AudioForge
+    packageId: com.raven12345.audioforge
+    gitUrl: https://github.com/Konosos/Raven12345.git?path=Assets/Packages/AudioForge
+    description: Non-destructive batch audio trim, gain, normalization, and fades.
+  - displayName: RavenConsole
+    packageId: com.raven12345.ravenconsole
+    gitUrl: https://github.com/Konosos/Raven12345.git?path=Assets/Packages/RavenConsole
+    description: Runtime TextMeshPro command console with command discovery, execution,
+      logging, and suggestions.

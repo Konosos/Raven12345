@@ -1,0 +1,22 @@
+{
+  "name": "com.raven12345.ravenconsole",
+  "version": "1.0.0",
+  "displayName": "RavenConsole",
+  "description": "A runtime TextMeshPro command console for Unity with command discovery, execution, logging, and suggestions.",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.ugui": "1.0.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "console",
+    "commands",
+    "debug",
+    "runtime",
+    "textmeshpro"
+  ],
+  "author": {
+    "name": "Raven12345"
+  }
+}

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17f3b716c1c4c26af68b2f82bd672f4, type: 3}
+  m_Name: Default CommandConsole Theme
+  m_EditorClassIdentifier: 
+  useColoredLogs: 1
+  infoLogColor: {r: 0.82, g: 0.88, b: 0.93, a: 1}
+  commandLogColor: {r: 0.55, g: 0.88, b: 1, a: 1}
+  successLogColor: {r: 0.45, g: 0.9, b: 0.62, a: 1}
+  warningLogColor: {r: 1, g: 0.78, b: 0.35, a: 1}
+  errorLogColor: {r: 1, g: 0.42, b: 0.42, a: 1}
+  suggestionCompletionColor: {r: 1, g: 1, b: 1, a: 1}
+  suggestionParameterColor: {r: 0.82, g: 0.91, b: 0.96, a: 1}
+  suggestionSecondaryColor: {r: 0.61, g: 0.71, b: 0.78, a: 1}
+  ghostInputMaskColor: {r: 1, g: 1, b: 1, a: 0}
+  ghostHintColor: {r: 0.61, g: 0.71, b: 0.78, a: 1}
+  scanSummaryFormat: Scanned {0} command(s).
+  emptyCommandResultText: OK
+  noCommandsRegisteredText: No commands are registered.
+  registeredCommandsHeaderFormat: 'Registered commands ({0}):'
+  commandInputFormat: '> {0}'
+  commandResultFormat: '  -> {0}'
+  commandSignatureFormat: '{0} {1}'
+  commandDescriptionFormat: '{0} - {1}'
+  parameterSeparator: ' '
+  requiredParameterFormat: '<{0}: {1}>'
+  optionalParameterFormat: '[{0}: {1} = {2}]'
+  paramsParameterSuffix: '...'
+  suggestionGhostHintFormat: ' {0}'
+  suggestionDescriptionFormat: '  {0}'
