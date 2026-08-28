@@ -64,7 +64,9 @@ namespace Raven12345
             int discoveredCount = 0;
             foreach (MethodInfo method in type.GetMethods(CommandMethodFlags))
             {
-                if (method.IsAbstract || method.ContainsGenericParameters)
+                if (method.IsAbstract ||
+                    method.ContainsGenericParameters ||
+                    HasUnsupportedSignature(method))
                 {
                     continue;
                 }
@@ -116,6 +118,19 @@ namespace Raven12345
 
             overloads.Add(command);
             return true;
+        }
+
+        private static bool HasUnsupportedSignature(MethodInfo method)
+        {
+            if (method.ReturnType.IsByRef || method.ReturnType.IsPointer)
+            {
+                return true;
+            }
+
+            return method.GetParameters().Any(parameter =>
+                parameter.IsOut ||
+                parameter.ParameterType.IsByRef ||
+                parameter.ParameterType.IsPointer);
         }
 
         private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)

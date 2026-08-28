@@ -67,9 +67,19 @@ namespace Raven12345
                     }
                 }
 
-                if (TryBind(candidate, arguments, out object[] values, out int score))
+                if (TryBind(
+                        candidate,
+                        arguments,
+                        out object[] values,
+                        out int score,
+                        out int defaultedParameterCount))
                 {
-                    matches.Add(new BoundCommand(candidate, invocationTarget, values, score));
+                    matches.Add(new BoundCommand(
+                        candidate,
+                        invocationTarget,
+                        values,
+                        score,
+                        defaultedParameterCount));
                 }
             }
 
@@ -82,6 +92,11 @@ namespace Raven12345
             int highestScore = matches.Max(match => match.Score);
             List<BoundCommand> bestMatches = matches
                 .Where(match => match.Score == highestScore)
+                .ToList();
+
+            int fewestDefaultedParameters = bestMatches.Min(match => match.DefaultedParameterCount);
+            bestMatches = bestMatches
+                .Where(match => match.DefaultedParameterCount == fewestDefaultedParameters)
                 .ToList();
 
             if (bestMatches.Count != 1)
@@ -113,11 +128,13 @@ namespace Raven12345
             CommandDefinition command,
             IReadOnlyList<string> tokens,
             out object[] values,
-            out int score)
+            out int score,
+            out int defaultedParameterCount)
         {
             ParameterInfo[] parameters = command.Parameters;
             values = new object[parameters.Length];
             score = 0;
+            defaultedParameterCount = 0;
             int tokenIndex = 0;
 
             for (int parameterIndex = 0; parameterIndex < parameters.Length; parameterIndex++)
@@ -154,6 +171,7 @@ namespace Raven12345
                     }
 
                     values[parameterIndex] = parameter.DefaultValue;
+                    defaultedParameterCount++;
                     continue;
                 }
 
@@ -294,18 +312,21 @@ namespace Raven12345
                 CommandDefinition definition,
                 object target,
                 object[] arguments,
-                int score)
+                int score,
+                int defaultedParameterCount)
             {
                 Definition = definition;
                 Target = target;
                 Arguments = arguments;
                 Score = score;
+                DefaultedParameterCount = defaultedParameterCount;
             }
 
             public CommandDefinition Definition { get; }
             public object Target { get; }
             public object[] Arguments { get; }
             public int Score { get; }
+            public int DefaultedParameterCount { get; }
         }
     }
 }

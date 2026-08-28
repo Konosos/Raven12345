@@ -49,6 +49,7 @@ namespace Raven12345
         private CommandSuggester _suggester;
         private CommandConsoleTheme _fallbackTheme;
         private volatile bool _canCaptureUnityLogs;
+        private bool _hasScannedCommands;
 
         /// <summary>Raised after output changes so a view can update its scroll position.</summary>
         public event Action OutputChanged;
@@ -105,12 +106,14 @@ namespace Raven12345
                 }
             }
 
+            _hasScannedCommands = true;
             AppendLog(ActiveTheme.FormatScanSummary(_registry.Commands.Count), CommandLogLevel.Info);
         }
 
         /// <summary>Executes input submitted by the assigned input field.</summary>
         public void ExecuteInput(string input)
         {
+            EnsureCommandsScanned();
             if (_executor == null)
             {
                 _executor = new CommandExecutor(_registry);
@@ -209,12 +212,21 @@ namespace Raven12345
         /// <summary>Gets command and parameter suggestions for the current input text.</summary>
         public IReadOnlyList<CommandSuggestion> GetSuggestions(string input, int maxResults = 8)
         {
+            EnsureCommandsScanned();
             if (_suggester == null)
             {
                 _suggester = new CommandSuggester(_registry);
             }
 
             return _suggester.Suggest(input, maxResults);
+        }
+
+        private void EnsureCommandsScanned()
+        {
+            if (!_hasScannedCommands)
+            {
+                ScanCommands();
+            }
         }
 
         private void AddCommandSource(MonoBehaviour source)
