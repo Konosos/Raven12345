@@ -100,6 +100,12 @@ namespace Raven12345
                 GUILayout.Space(8);
                 showInstalledOnly = GUILayout.Toggle(showInstalledOnly, "Installed only", EditorStyles.toolbarButton, GUILayout.Width(94));
                 GUILayout.FlexibleSpace();
+                if (catalog != null)
+                {
+                    EditorGUI.BeginChangeCheck();
+                    catalog.autoCheckUnityGiveaway = GUILayout.Toggle(catalog.autoCheckUnityGiveaway, "Giveaway alerts", EditorStyles.toolbarButton, GUILayout.Width(100));
+                    if (EditorGUI.EndChangeCheck()) SaveCatalog();
+                }
                 editCatalog = GUILayout.Toggle(editCatalog, "Edit catalogue", EditorStyles.toolbarButton, GUILayout.Width(95));
                 if (GUILayout.Button("Select Asset", EditorStyles.toolbarButton, GUILayout.Width(80))) Selection.activeObject = catalog;
             }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266135989acd604ca6dccfebc516567, type: 3}
   m_Name: RavenPackageCatalog
   m_EditorClassIdentifier: 
+  autoCheckUnityGiveaway: 1
   packages:
   - displayName: SpriteForge
     packageId: com.raven12345.spriteforge

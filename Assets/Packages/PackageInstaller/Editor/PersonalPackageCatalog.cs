@@ -17,6 +17,8 @@ namespace Raven12345
     /// <summary>Project-owned catalogue, kept outside the installed package so teams can customise it.</summary>
     public sealed class PersonalPackageCatalog : ScriptableObject
     {
+        [Tooltip("Check Unity Publisher Asset Giveaways once when the Editor opens. Results are cached for six hours.")]
+        public bool autoCheckUnityGiveaway = true;
         public List<PersonalPackageDefinition> packages = new List<PersonalPackageDefinition>();
 
         [MenuItem("Assets/Create/Raven/Personal Package Catalog")]
