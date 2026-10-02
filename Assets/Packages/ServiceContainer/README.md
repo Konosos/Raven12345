@@ -1,5 +1,9 @@
 # Service Container
 
+## Requirements
+
+- Unity `6000.0.67f1` or newer.
+
 ## Installation
 
 Add the package through Unity's **Package Manager** using the following Git URL:

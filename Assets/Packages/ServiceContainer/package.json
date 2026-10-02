@@ -1,9 +1,10 @@
 {
   "name": "com.raven12345.servicecontainer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Service Container",
   "description": "A lightweight service container for Unity.",
-  "unity": "2020.3",
+  "unity": "6000.0",
+  "unityRelease": "67f1",
   "license": "MIT",
   "keywords": [
     "service-container",
