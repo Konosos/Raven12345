@@ -3,7 +3,8 @@
   "rootNamespace": "Raven12345",
   "references": [
     "Unity.TextMeshPro",
-    "Unity.ugui"
+    "UnityEngine.UI",
+    "Unity.InputSystem"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

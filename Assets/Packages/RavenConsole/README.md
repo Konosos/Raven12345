@@ -20,6 +20,15 @@ https://github.com/Konosos/Raven12345.git.git?path=/Assets/Packages/RavenConsole
 
 - Unity 2022.3 or newer
 - TextMeshPro (`com.unity.textmeshpro`)
+- Input System (`com.unity.inputsystem`, installed as a package dependency)
+
+## Swipe to open
+
+With the console closed, drag down from the top 5% of the full screen by at least
+12% of its height within 0.5 seconds. Configure these thresholds under
+`Swipe To Open` on `CommandConsoleUI`. Touch and mouse are supported.
+The gesture supports Legacy Input Manager, Input System, and Both; Both uses
+Input System exclusively. Device Simulator uses the simulated screen dimensions.
 
 ## Quick start
 
