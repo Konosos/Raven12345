@@ -7,13 +7,13 @@ RavenConsole is a runtime command console for Unity. It provides command discove
 Add the package with Unity Package Manager using the repository URL and this package path:
 
 ```
-https://github.com/Konosos/Raven12345.git.git?path=/Assets/Packages/RavenConsole
+https://github.com/Konosos/Raven12345.git?path=/Assets/Packages/RavenConsole
 ```
 
 Pin a revision when appropriate:
 
 ```
-https://github.com/Konosos/Raven12345.git.git?path=/Assets/Packages/RavenConsole#v1.0.0
+https://github.com/Konosos/Raven12345.git?path=/Assets/Packages/RavenConsole#v1.0.0
 ```
 
 ## Requirements
