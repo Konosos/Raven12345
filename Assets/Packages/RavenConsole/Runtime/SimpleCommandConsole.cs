@@ -213,10 +213,7 @@ namespace Raven12345
         public IReadOnlyList<CommandSuggestion> GetSuggestions(string input, int maxResults = 8)
         {
             EnsureCommandsScanned();
-            if (_suggester == null)
-            {
-                _suggester = new CommandSuggester(_registry);
-            }
+            _suggester ??= new CommandSuggester(_registry);
 
             return _suggester.Suggest(input, maxResults);
         }
