@@ -200,7 +200,7 @@ public class SpineAssetStudioWindow : EditorWindow {
 					RecordUndo();
 					if (nameChanged) {
 						key["name"] = name;
-						EnsureDefinition(name);
+						UpdateEventDefinitionAfterRename(currentName, name);
 					}
 					if (valuesChanged) {
 						key["time"] = Snap(time);
@@ -382,6 +382,23 @@ public class SpineAssetStudioWindow : EditorWindow {
 	}
 	List<Dictionary<string, object>> EventKeys => RawEventKeys.Cast<Dictionary<string, object>>().ToList();
 	void EnsureDefinition (string name) { Dictionary<string, object> root = Root; if (!root.TryGetValue("events", out object raw)) { raw = new Dictionary<string, object>(); root["events"] = raw; } Dictionary<string, object> definitions = (Dictionary<string, object>)raw; if (!definitions.ContainsKey(name)) definitions[name] = new Dictionary<string, object>(); }
+
+	void UpdateEventDefinitionAfterRename (string oldName, string newName) {
+		bool targetExists = Root.TryGetValue("events", out object raw)
+			&& ((Dictionary<string, object>)raw).ContainsKey(newName);
+		EnsureDefinition(newName);
+		var definitions = (Dictionary<string, object>)Root["events"];
+		if (!definitions.TryGetValue(oldName, out object oldDefinition)) return;
+
+		foreach (var animation in Animations.Values.OfType<Dictionary<string, object>>()) {
+			if (animation.TryGetValue("events", out object timeline) && timeline is List<object> keys
+				&& keys.OfType<Dictionary<string, object>>().Any(key => Text(key, "name") == oldName))
+				return;
+		}
+
+		if (!targetExists) definitions[newName] = oldDefinition;
+		definitions.Remove(oldName);
+	}
 	static float Number (Dictionary<string, object> map, string key, float fallback = 0) => map.TryGetValue(key, out object value) ? Convert.ToSingle(value, CultureInfo.InvariantCulture) : fallback;
 	static string Text (Dictionary<string, object> map, string key) => map.TryGetValue(key, out object value) ? value?.ToString() ?? "" : "";
 
