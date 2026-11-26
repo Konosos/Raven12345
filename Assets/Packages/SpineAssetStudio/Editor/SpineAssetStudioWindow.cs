@@ -181,13 +181,38 @@ public class SpineAssetStudioWindow : EditorWindow {
 			if (index != selectedEventIndex) { EditorGUILayout.EndVertical(); continue; }
 			EditorGUI.BeginChangeCheck();
 			float time = EditorGUILayout.Slider("Time", Number(key, "time"), 0, Mathf.Max(.01f, Duration));
-			string name = EditorGUILayout.TextField("Name", Text(key, "name"));
+			string currentName = Text(key, "name");
+			string name = EditorGUILayout.DelayedTextField(
+				new GUIContent("Name", "Press Enter or leave the field to apply the name."),
+				currentName);
 			int intValue = EditorGUILayout.IntField("Int", (int)Number(key, "int"));
 			float floatValue = EditorGUILayout.FloatField("Float", Number(key, "float"));
 			string stringValue = EditorGUILayout.TextField("String", Text(key, "string"));
 			float volume = EditorGUILayout.Slider("Volume", Number(key, "volume", 1), 0, 1);
 			float balance = EditorGUILayout.Slider("Balance", Number(key, "balance"), -1, 1);
-			if (EditorGUI.EndChangeCheck()) { RecordUndo(); key["time"] = Snap(time); key["name"] = name; key["int"] = intValue; key["float"] = floatValue; key["string"] = stringValue; key["volume"] = volume; key["balance"] = balance; EnsureDefinition(name); Save(false); }
+			if (EditorGUI.EndChangeCheck()) {
+				if (string.IsNullOrWhiteSpace(name)) name = currentName;
+				bool nameChanged = name != currentName;
+				bool valuesChanged = time != Number(key, "time") || intValue != (int)Number(key, "int")
+					|| floatValue != Number(key, "float") || stringValue != Text(key, "string")
+					|| volume != Number(key, "volume", 1) || balance != Number(key, "balance");
+				if (nameChanged || valuesChanged) {
+					RecordUndo();
+					if (nameChanged) {
+						key["name"] = name;
+						EnsureDefinition(name);
+					}
+					if (valuesChanged) {
+						key["time"] = Snap(time);
+						key["int"] = intValue;
+						key["float"] = floatValue;
+						key["string"] = stringValue;
+						key["volume"] = volume;
+						key["balance"] = balance;
+					}
+					Save(false);
+				}
+			}
 			EditorGUILayout.EndVertical();
 		}
 		if (EventKeys.Count == 0) EditorGUILayout.LabelField("No event keys in this animation.", EditorStyles.centeredGreyMiniLabel);
